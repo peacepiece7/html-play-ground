@@ -40,8 +40,9 @@ function handleScrollMove(event) {
 pageUpEl.addEventListener("click", handlePageUp);
 
 function handlePageUp() {
-  window.location.reload();
-  window.scroll(0, 0);
+  gsap.to(window, 0.6, {
+    scrollTo: 0,
+  });
 }
 
 // sub menu
@@ -89,13 +90,36 @@ new Swiper(".notice .swiper-container", {
 // Main cat scroll magic
 
 const mainCatEls = document.querySelectorAll("#animateFadeInside");
-const trigger = document.querySelector(".main-cat-promotion");
+const MainCattrigger = document.querySelector(".main-cat-promotion");
 
 mainCatEls.forEach((mainCatEl) => {
   new ScrollMagic.Scene({
-    triggerElement: trigger,
+    triggerElement: MainCattrigger,
     triggerHook: 0.7,
   })
     .setClassToggle(mainCatEl, "show")
+    .addTo(new ScrollMagic.Controller());
+});
+
+const catTitleEl = document.querySelectorAll(".choice-cat__title h4");
+const catPharsEl = document.querySelector(".choice-cat__title p");
+const catListEls = document.querySelectorAll(".choice-cat .cat-list img");
+const choiceCatTrigger = document.querySelector(".choice-cat");
+
+catListEls.forEach((catListEls) => {
+  new ScrollMagic.Scene({
+    triggerElement: choiceCatTrigger,
+    triggerHook: 0.9,
+  })
+    .setClassToggle(catListEls, "show")
+    .addTo(new ScrollMagic.Controller());
+});
+
+[catTitleEl, catPharsEl].forEach((catEl) => {
+  new ScrollMagic.Scene({
+    triggerElement: choiceCatTrigger,
+    triggerHook: 0.9,
+  })
+    .setClassToggle(catEl, "show")
     .addTo(new ScrollMagic.Controller());
 });
